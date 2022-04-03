@@ -8,7 +8,7 @@ pub struct Interpretor {
 
 impl Interpretor{
     fn process_instruction(&mut self, instruction_index: usize){
-        let mut oparg: &str = &self.instructions[instruction_index].1[..];
+        let oparg: &str = &self.instructions[instruction_index].1[..];
         match &self.instructions[instruction_index].0[..] {
             "LOAD_VAL"  => self.byte_code.load_val(oparg),
             "WRITE_VAR" => self.byte_code.write_var(oparg),
@@ -16,7 +16,10 @@ impl Interpretor{
             "ADD" => self.byte_code.add(),
             "MULTIPLY" => self.byte_code.multiply(),
             "RETURN_VALUE" => {
-                println!("Computed return value: {}", self.byte_code.return_value())
+                println!(
+                    "================================\n\x1b[36mValue returned from the stack: {}\x1b[0m\n================================", 
+                    self.byte_code.return_value()
+                )
             },
             _ => println!("Unrecognized opname")
         }
@@ -31,7 +34,9 @@ impl Interpretor{
     }
 
     pub fn interpret(&mut self) {
+
         for i in 0..self.instructions.len() {
+            self.instruction_pointer = self.instruction_pointer + 1;
             self.process_instruction(i)
         }
     }
@@ -41,14 +46,13 @@ pub fn text_to_operations(text: &str) -> Vec<(String, String)>{
     let mut operations: Vec<(String, String)> = vec![];
     let full_operations: Vec<&str> = text.trim().split("\n").collect();
     
-    for mut i in 0..full_operations.len() {
+    for i in 0..full_operations.len() {
         let full_operation = 
             full_operations[i]
                 .replace("\t", "")
                 .replace("  ", "")
                 .replace("'", "");
-        let mut operation: Vec<&str> = Vec::with_capacity(2);
-        operation = full_operation.trim().split(" ").collect();
+        let mut operation: Vec<&str> = full_operation.trim().split(" ").collect();
         if operation.len() == 1 {
             operation.push("")
         }
