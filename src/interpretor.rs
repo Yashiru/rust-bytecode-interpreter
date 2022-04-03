@@ -36,3 +36,29 @@ impl Interpretor{
         }
     }
 }
+
+pub fn text_to_operations(text: &str) -> Vec<(String, String)>{
+    let mut operations: Vec<(String, String)> = vec![];
+    let full_operations: Vec<&str> = text.trim().split("\n").collect();
+    
+    for mut i in 0..full_operations.len() {
+        let full_operation = 
+            full_operations[i]
+                .replace("\t", "")
+                .replace("  ", "")
+                .replace("'", "");
+        let mut operation: Vec<&str> = Vec::with_capacity(2);
+        operation = full_operation.trim().split(" ").collect();
+        if operation.len() == 1 {
+            operation.push("")
+        }
+        operations.push(
+            (
+                String::from(operation[0]),
+                String::from(operation[1])
+            )
+        );
+    }
+
+    operations
+}
