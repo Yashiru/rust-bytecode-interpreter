@@ -7,14 +7,25 @@ pub struct Interpretor {
 }
 
 impl Interpretor{
-    fn process_instruction(&self, instruction_index: usize){
-        println!("{:?}", self.instructions)
+    fn process_instruction(&mut self, instruction_index: usize){
+        let mut oparg: &str = &self.instructions[instruction_index].1[..];
+        match &self.instructions[instruction_index].0[..] {
+            "LOAD_VAL"  => self.byte_code.load_val(oparg),
+            "WRITE_VAR" => self.byte_code.write_var(oparg),
+            "READ_VAR" => self.byte_code.read_var(oparg),
+            "ADD" => self.byte_code.add(),
+            "MULTIPLY" => self.byte_code.multiply(),
+            "RETURN_VALUE" => {
+                println!("Computed return value: {}", self.byte_code.return_value())
+            },
+            _ => println!("Unrecognized opname")
+        }
     }
 
     pub fn new(instructions: Vec<(String, String)>) -> Interpretor {
         Interpretor {
             instruction_pointer: 0,
-            instructions: vec![],
+            instructions: instructions,
             byte_code: byte_code::ByteCode::new([].to_vec())
         }
     }

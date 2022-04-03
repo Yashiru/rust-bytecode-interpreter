@@ -4,8 +4,8 @@ pub struct ByteCode {
 }
 
 impl ByteCode {
-    fn is_empty(&self) {
-        self.stack.len();
+    fn is_empty(&self) -> bool{
+        self.stack.len() == 0
     }
 
     fn push(&mut self, value: f64) {
@@ -23,11 +23,12 @@ impl ByteCode {
         }
     }
 
-    pub fn load_val(&mut self, value: f64){
-        self.stack.push(value);
+    pub fn load_val(&mut self, value: &str){
+        self.stack.push(value.parse::<f64>().unwrap());
     }
 
-    pub fn write_val(&mut self, var_name: String){
+    pub fn write_var(&mut self, var_name: &str){
+        assert!(self.is_empty() == false, "stack is empty");
         let value: f64 = self.stack[self.stack.len()-1];
         let index = self.environment
             .iter()
@@ -37,7 +38,7 @@ impl ByteCode {
             );
 
         if index == std::u64::MAX.try_into().unwrap() {
-            self.environment.push((var_name, value));
+            self.environment.push((var_name.to_string(), value));
         } 
         else {
             self.environment[index].1 = value;
@@ -45,7 +46,7 @@ impl ByteCode {
         self.pop();
     }
 
-    pub fn read_var(&mut self, var_name: String){
+    pub fn read_var(&mut self, var_name: &str){
         let index = self.environment
             .iter()
             .position(|r| r.0 == var_name.clone())
