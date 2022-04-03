@@ -66,4 +66,11 @@ impl ByteCode {
         self.stack = [].to_vec();
         self.push(multiplication_result);
     }
+
+    pub fn ADD(&mut self){
+        let mut addition_result: f64 = 0.0;
+        let _collector: Vec<_> = self.stack.iter().map(|x| addition_result += x).collect();
+        self.stack = [].to_vec();
+        self.push(addition_result);
+    }
 }
