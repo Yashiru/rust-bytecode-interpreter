@@ -22,4 +22,8 @@ impl ByteCode {
             environment: [].to_vec()
         }
     }
+
+    pub fn LOAD_VAL(&mut self, value: f64){
+        self.stack.push(value);
+    }
 }
