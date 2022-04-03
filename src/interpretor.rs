@@ -17,6 +17,16 @@ impl Interpretor{
             op_codes::OpCodes::ReadVar => self.byte_code.read_var(oparg),
             op_codes::OpCodes::Add => self.byte_code.add(),
             op_codes::OpCodes::Multiply => self.byte_code.multiply(),
+            op_codes::OpCodes::TestLessThan => self.byte_code.test_less_than(oparg),
+            op_codes::OpCodes::TestMoreThan => self.byte_code.test_more_than(oparg),
+            op_codes::OpCodes::TestEqualsTo => self.byte_code.test_equals_to(oparg),
+            op_codes::OpCodes::TestDifferentFrom => self.byte_code.test_different_from(oparg),
+            op_codes::OpCodes::JumpIfFalse => {
+                if self.byte_code.is_false() {
+                    self.instruction_pointer = oparg.parse::<u32>().unwrap() - 1;
+                }
+            },
+            op_codes::OpCodes::JumpLoop => {self.instruction_pointer = oparg.parse::<u32>().unwrap() - 1; println!("re loop")},
             op_codes::OpCodes::ReturnValue => {
                 println!(
                     "================================\n\x1b[36mValue returned from the stack: {}\x1b[0m\n================================", 
@@ -37,7 +47,7 @@ impl Interpretor{
 
     pub fn interpret(&mut self) {
         self.instruction_pointer = 0;
-        for _i in 0..self.instructions.len() {
+        while self.instruction_pointer < self.instructions.len().try_into().unwrap() {
             self.process_instruction(self.instruction_pointer.try_into().unwrap());
             self.instruction_pointer = self.instruction_pointer + 1;
         }
@@ -67,7 +77,13 @@ pub fn text_to_operations(text: &str) -> Vec<(op_codes::OpCodes, String)>{
             "ADD" => op_code = op_codes::OpCodes::Add,
             "MULTIPLY" => op_code = op_codes::OpCodes::Multiply,
             "RETURN_VALUE" => op_code = op_codes::OpCodes::ReturnValue,
-            _ => panic!("Unrecognized opname")
+            "TEST_LESS_THAN" => op_code = op_codes::OpCodes::TestLessThan,
+            "TEST_MORE_THAN" => op_code = op_codes::OpCodes::TestMoreThan,
+            "TEST_EQUALS_TO" => op_code = op_codes::OpCodes::TestEqualsTo,
+            "TEST_DIFFERENT_FROM" => op_code = op_codes::OpCodes::TestDifferentFrom,
+            "JUMP_IF_FALSE" => op_code = op_codes::OpCodes::JumpIfFalse,
+            "JUMP_LOOP" => op_code = op_codes::OpCodes::JumpLoop,
+            _ => panic!("\x1b[31mUnrecognized opname \x1b[36m\"{}\"\x1b[0m", operation[0])
         }
 
 
@@ -79,6 +95,8 @@ pub fn text_to_operations(text: &str) -> Vec<(op_codes::OpCodes, String)>{
         );
 
     }
+
+    println!("{:?}", operations);
 
     operations
 }
