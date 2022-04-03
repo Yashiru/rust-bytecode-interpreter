@@ -15,4 +15,11 @@ impl ByteCode {
     fn pop(&mut self) {
         self.stack.pop();
     }
+
+    pub fn new(stack: Vec<f64>) -> ByteCode {
+        ByteCode { 
+            stack: stack,
+            environment: [].to_vec()
+        }
+    }
 }
