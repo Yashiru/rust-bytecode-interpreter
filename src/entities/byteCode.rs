@@ -73,4 +73,8 @@ impl ByteCode {
         self.stack = [].to_vec();
         self.push(addition_result);
     }
+
+    pub fn RETURN_VALUE(&self) -> f64 {
+        self.stack[self.stack.len()-1]
+    }
 }
