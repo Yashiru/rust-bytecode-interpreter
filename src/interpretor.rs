@@ -95,8 +95,6 @@ pub fn text_to_operations(text: &str) -> Vec<(op_codes::OpCodes, String)>{
         );
 
     }
-
-    println!("{:?}", operations);
-
+    
     operations
 }
