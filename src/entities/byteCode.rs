@@ -38,11 +38,9 @@ impl ByteCode {
 
         if index == std::u64::MAX.try_into().unwrap() {
             self.environment.push((var_name, value));
-            println!("new variable {} = {}", self.environment[self.environment.len()-1].0, self.environment[self.environment.len()-1].1)
         } 
         else {
             self.environment[index].1 = value;
-            println!("Assign variable {} = {}", self.environment[self.environment.len()-1].0, self.environment[self.environment.len()-1].1)
         }
         self.pop();
     }
