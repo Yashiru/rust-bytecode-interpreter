@@ -4,6 +4,11 @@ pub struct ByteCode {
 }
 
 impl ByteCode {
+
+    /**
+     * Basic stack manipulations functions
+     */
+
     fn is_empty(&self) -> bool{
         self.stack.len() == 0
     }
@@ -23,9 +28,33 @@ impl ByteCode {
         }
     }
 
+
+    /**
+     * Stack values manipulations
+     */
+
     pub fn load_val(&mut self, value: &str){
         self.stack.push(value.parse::<f64>().unwrap());
     }
+
+    pub fn multiply(&mut self){
+        let mut multiplication_result: f64 = 1.0;
+        let _collector: Vec<_> = self.stack.iter().map(|x| multiplication_result *= x).collect();
+        self.stack = [].to_vec();
+        self.push(multiplication_result);
+    }
+
+    pub fn add(&mut self){
+        let mut addition_result: f64 = 0.0;
+        let _collector: Vec<_> = self.stack.iter().map(|x| addition_result += x).collect();
+        self.stack = [].to_vec();
+        self.push(addition_result);
+    }
+
+
+    /**
+     * Interaction between environment and stack
+     */
 
     pub fn write_var(&mut self, var_name: &str){
         assert!(self.is_empty() == false, "stack is empty");
@@ -59,23 +88,75 @@ impl ByteCode {
         self.push(self.environment[index].1);
     }
 
-    pub fn multiply(&mut self){
-        let mut multiplication_result: f64 = 1.0;
-        let _collector: Vec<_> = self.stack.iter().map(|x| multiplication_result *= x).collect();
-        self.stack = [].to_vec();
-        self.push(multiplication_result);
+
+    /**
+     * Test the stack
+     */
+
+    pub fn test_less_than(&mut self, value_to_compare: &str){
+        let value: f64 = self.stack[self.stack.len()-1];
+        let less_than: bool = value < value_to_compare.parse::<f64>().unwrap();
+        if less_than == true {
+            self.push(1.0);
+        }
+        else {
+            self.push(0.0);
+        }
     }
 
-    pub fn add(&mut self){
-        let mut addition_result: f64 = 0.0;
-        let _collector: Vec<_> = self.stack.iter().map(|x| addition_result += x).collect();
-        self.stack = [].to_vec();
-        self.push(addition_result);
+    pub fn test_more_than(&mut self, value_to_compare: &str){
+        let value: f64 = self.stack[self.stack.len()-1];
+        let more_than: bool = value > value_to_compare.parse::<f64>().unwrap();
+        if more_than == true {
+            self.push(1.0);
+        }
+        else {
+            self.push(0.0);
+        }
     }
+
+    pub fn test_equals_to(&mut self, value_to_compare: &str){
+        let value: f64 = self.stack[self.stack.len()-1];
+        let equals_to: bool = value == value_to_compare.parse::<f64>().unwrap();
+        if equals_to == true {
+            self.push(1.0);
+        }
+        else {
+            self.push(0.0);
+        }
+    }
+
+    pub fn test_different_from(&mut self, value_to_compare: &str){
+        let value: f64 = self.stack[self.stack.len()-1];
+        let different_from: bool = value != value_to_compare.parse::<f64>().unwrap();
+        if different_from == true {
+            self.push(1.0);
+        }
+        else {
+            self.push(0.0);
+        }
+    }
+
+
+    /**
+     * Check test result
+     */
+
+    pub fn is_false(&mut self) -> bool {
+        let is_false: bool = self.stack[self.stack.len()-1] == 0.0;
+        self.pop(); // pop boolean value coming from test function
+        self.pop(); // pop tested value
+        is_false
+    }
+
+
+    /**
+     * Return value as a result
+     */
 
     pub fn return_value(&mut self) -> f64 {
         let return_value = self.stack[self.stack.len()-1];
-        self.pop();
+        self.stack = [].to_vec();
         return_value
     }
 }
