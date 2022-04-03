@@ -26,7 +26,7 @@ impl Interpretor{
                     self.instruction_pointer = oparg.parse::<u32>().unwrap() - 1;
                 }
             },
-            op_codes::OpCodes::JumpLoop => {self.instruction_pointer = oparg.parse::<u32>().unwrap() - 1; println!("re loop")},
+            op_codes::OpCodes::JumpLoop => self.instruction_pointer = oparg.parse::<u32>().unwrap() - 1,
             op_codes::OpCodes::ReturnValue => {
                 println!(
                     "================================\n\x1b[36mValue returned from the stack: {}\x1b[0m\n================================", 
