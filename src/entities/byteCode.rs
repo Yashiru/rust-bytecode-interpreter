@@ -46,4 +46,17 @@ impl ByteCode {
         }
         self.pop();
     }
+
+    pub fn READ_VAR(&mut self, var_name: String){
+        let index = self.environment
+            .iter()
+            .position(|r| r.0 == var_name.clone())
+            .unwrap_or(
+                std::u64::MAX.try_into().unwrap()
+            );
+
+        assert!(index != std::u64::MAX.try_into().unwrap(), "{} not found in this scope", var_name);
+
+        self.push(self.environment[index].1);
+    }
 }
