@@ -73,7 +73,9 @@ impl ByteCode {
         self.push(addition_result);
     }
 
-    pub fn return_value(&self) -> f64 {
-        self.stack[self.stack.len()-1]
+    pub fn return_value(&mut self) -> f64 {
+        let return_value = self.stack[self.stack.len()-1];
+        self.pop();
+        return_value
     }
 }
