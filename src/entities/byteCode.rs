@@ -59,4 +59,11 @@ impl ByteCode {
 
         self.push(self.environment[index].1);
     }
+
+    pub fn MULTIPLY(&mut self){
+        let mut multiplication_result: f64 = 1.0;
+        let _collector: Vec<_> = self.stack.iter().map(|x| multiplication_result *= x).collect();
+        self.stack = [].to_vec();
+        self.push(multiplication_result);
+    }
 }
