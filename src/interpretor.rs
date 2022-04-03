@@ -1,28 +1,27 @@
-#[path = "entities/byteCode.rs"] mod byteCode;
-
-enum OperatorArgument {
-    string_value(String),
-    float_value(f64)
-}
-
-enum Instruction {
-    op_name(String),
-    op_arg(OperatorArgument)
-}
+#[path = "entities/byte_code.rs"] mod byte_code;
 
 pub struct Interpretor {
     pub instruction_pointer: u32,
-    pub instructions: Vec<(String, f64 | String)>
+    pub instructions: Vec<(String, String)>,
+    pub byte_code: byte_code::ByteCode
 }
 
 impl Interpretor{
-    pub fn new() -> Interpretor {
+    fn process_instruction(&self, instruction_index: usize){
+        println!("{:?}", self.instructions)
+    }
+
+    pub fn new(instructions: Vec<(String, String)>) -> Interpretor {
         Interpretor {
             instruction_pointer: 0,
-            instructions: [].to_vec()
+            instructions: vec![],
+            byte_code: byte_code::ByteCode::new([].to_vec())
         }
     }
 
-    pub fn interpret(&self, instructions: Vec<Instruction>) {
+    pub fn interpret(&mut self) {
+        for i in 0..self.instructions.len() {
+            self.process_instruction(i)
+        }
     }
 }
