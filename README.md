@@ -90,3 +90,17 @@ JUMP_LOOP 14
 READ_VAR 'x'
 RETURN_VALUE
 ```
+
+## Supported byte code operation name
+* **LOAD_VAL** Load push a value on the stack
+* **WRITE_VAR** Write the value on top of the stack to a variable
+* **READ_VAR** Load the value of the variable on top of the stack 
+* **ADD** Adds the last two values, pop them from the stack and push the result on the stack
+* **MULTIPLY** Multiply the last two values, pop them from the stack and push the result on the stack
+* **RETURN_VALUE** Return the value on the stack (In this case, the interpreter print the result)
+* **TEST_LESS_THAN** Test if a value is less than the last value on the stack
+* **TEST_MORE_THAN** Test if a value is more than the last value on the stack
+* **TEST_EQUALS_TO** Test if a value is equals to the last value on the stack
+* **TEST_DIFFERENT_FROM** Test if a value is different the last value on the stack
+* **JUMP_IF_FALSE** Check if the result of a test is False, and jump if it is
+* **JUMP_LOOP** Jump to the start of a loop
