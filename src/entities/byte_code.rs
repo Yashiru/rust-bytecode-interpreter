@@ -38,16 +38,22 @@ impl ByteCode {
     }
 
     pub fn multiply(&mut self){
-        let mut multiplication_result: f64 = 1.0;
-        let _collector: Vec<_> = self.stack.iter().map(|x| multiplication_result *= x).collect();
+        let value1: f64 = self.stack[self.stack.len()-1];
+        self.pop();
+        let value2: f64 = self.stack[self.stack.len()-1];
+        self.pop();
         self.stack = [].to_vec();
+        let multiplication_result: f64 = value1 * value2;
         self.push(multiplication_result);
     }
 
     pub fn add(&mut self){
-        let mut addition_result: f64 = 0.0;
-        let _collector: Vec<_> = self.stack.iter().map(|x| addition_result += x).collect();
+        let value1: f64 = self.stack[self.stack.len()-1];
+        self.pop();
+        let value2: f64 = self.stack[self.stack.len()-1];
+        self.pop();
         self.stack = [].to_vec();
+        let addition_result: f64 = value1 + value2;
         self.push(addition_result);
     }
 
