@@ -93,7 +93,7 @@ READ_VAR 'x'
 RETURN_VALUE
 ```
 
-## Supported byte code opcodes
+## Supported byte code opnames
 * **LOAD_VAL** Load push a value on the stack
 * **WRITE_VAR** Write the value on top of the stack to a variable
 * **READ_VAR** Load the value of the variable on top of the stack 
