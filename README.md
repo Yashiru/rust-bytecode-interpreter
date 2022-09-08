@@ -7,10 +7,10 @@ Firstly you need to [install rust](https://www.rust-lang.org/tools/install).
 ### Clone the project
 ```bash
 # with SSH
-git clone git@gitlab.com:leofasano/bytecodes-interpreter.git
+git clone git@github.com:Yashiru/rust-bytecode-interpreter.git
 
 # with HTTP
-git clone https://gitlab.com/leofasano/bytecodes-interpreter.git
+git clone https://github.com/Yashiru/rust-bytecode-interpreter.git
 ```
 
 ### Build the project
@@ -27,7 +27,7 @@ cargo run
 
 ## Update the input bytecode
 
-Go into _**./src/main.rs**_ and update the byte code inside the **interpretor::text_to_operations** function.
+Go into `./src/main.rs` and update the byte code inside the `interpretor::text_to_operations` function.
 
 ```rust
 // main.rs file
@@ -59,7 +59,7 @@ while(i != 5){
 }
 return x;
 ```
-You can use this following byte code
+You must use this following byte code
 ```
 LOAD_VAL 1
 WRITE_VAR 'x'
@@ -91,7 +91,7 @@ READ_VAR 'x'
 RETURN_VALUE
 ```
 
-## Supported byte code operation name
+## Supported byte code opcodes
 * **LOAD_VAL** Load push a value on the stack
 * **WRITE_VAR** Write the value on top of the stack to a variable
 * **READ_VAR** Load the value of the variable on top of the stack 
