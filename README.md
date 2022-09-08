@@ -1,3 +1,5 @@
+<img align="right" width="150" height="150" top="100" src="https://www.rust-lang.org/static/images/rust-logo-blk.svg">
+
 # Bytecodes interpreter
 
 ## Getting started
