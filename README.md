@@ -7,15 +7,6 @@ A very basic and experimental bytecode interpreter.
 
 Firstly you need to [install rust](https://www.rust-lang.org/tools/install).
 
-### Clone the project
-```bash
-# with SSH
-git clone git@github.com:Yashiru/rust-bytecode-interpreter.git
-
-# with HTTP
-git clone https://github.com/Yashiru/rust-bytecode-interpreter.git
-```
-
 ### Build the project
 
 ```bash
